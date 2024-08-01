@@ -3,13 +3,12 @@
 #include <pthread.h>
 #include <SFML/Audio.h>
 
-static char fancy_duration_buffer[64];
-
 char* get_fancy_duration(int duration) {
 	int hours = duration / 3600;
 	int minutes = (duration % 3600) / 60;
 	int seconds = duration % 60;
 
+	static char fancy_duration_buffer[64];
 	snprintf(fancy_duration_buffer, sizeof(fancy_duration_buffer), "%s%d:%s%d:%s%d", ((hours < 10) ? "0" : ""), hours, ((minutes < 10) ? "0" : ""), minutes, ((seconds < 10) ? "0" : ""), seconds);
 	return fancy_duration_buffer;
 }
