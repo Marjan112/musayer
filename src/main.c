@@ -16,13 +16,18 @@ char* get_fancy_duration(int duration) {
 void* thread_checkkey(void* data) {
 	while(sfMusic_getStatus(data) != sfStopped) {
 		int key = getch();
-		if(key != ERR) {
-			if(key == 'p') {
+		switch(key) {
+			case 'p': {
 				if(sfMusic_getStatus(data) == sfPlaying) {
 					sfMusic_pause(data);
 				} else if(sfMusic_getStatus(data) == sfPaused) {
 					sfMusic_play(data);
 				}
+				break;
+			}
+			case 'e': {
+				sfMusic_stop(data);
+				break;
 			}
 		}
 	}
@@ -52,6 +57,8 @@ int main(int argc, char** argv) {
 	printw("[musayer] Duration: %s\n", get_fancy_duration(sfTime_asSeconds(sfMusic_getDuration(music))));
 	refresh();
 	printw("[musayer] Press key P to pause/unpause.\n");
+	refresh();
+	printw("[musayer] Press key E to exit.\n");
 	refresh();
 
 	sfMusic_play(music);
